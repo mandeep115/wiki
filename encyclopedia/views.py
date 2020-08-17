@@ -31,13 +31,11 @@ def search(request):
     found_list = []
 
     for title in title_list:
-        # print(type(title))
-        match = re.findall(f"{q}", title)
-        # print(match)
-        if match:
+        # print(title)
+        if re.match(f"{q}", title.lower()):
+            # print("i'm in")
             found_list.append(title)
-            # print(found_list)
-    print(found_list)
+    # print(found_list)
     return render(request, "encyclopedia/index.html", {
         "entries": found_list
     })
