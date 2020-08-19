@@ -22,6 +22,10 @@ textarea {
     width: 80%;
 }
 
+li {
+    list-style: none;
+}
+
 .main {
     padding: 10px;
 }
