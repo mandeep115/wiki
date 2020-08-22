@@ -7,4 +7,6 @@
 {% block body %}
     {% load md2 %}
     {{ content|safe|markdown }}
+    <button type="button" class="btn btn-warning">Edit</button>
+    
 {% endblock %}

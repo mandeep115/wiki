@@ -1,10 +1,17 @@
-from django.shortcuts import render
+from django.http import HttpResponseRedirect
 from django.http import HttpResponse
+from django.shortcuts import render
+from django.urls import reverse
 from markdown2 import Markdown
+from django import forms
 import random
 import re
 
 from . import util
+
+class wikiform(forms.Form):
+    title = forms.CharField(label="Title for your wiki entry")
+    content = forms.CharField(label="Content for your wiki entry", widget=forms.Textarea)
 
 
 def index(request):
@@ -42,7 +49,27 @@ def search(request):
     })
 
 def create(request):
-    return render(request, "encyclopedia/create.html")
+    if request.method == "POST":
+        form = wikiform(request.POST)
+        
+        if form.is_valid():
+            
+            title = form.cleaned_data["title"]
+            content = form.cleaned_data["content"]
+            
+            util.save_entry(title, content)
+            return HttpResponseRedirect(reverse("index"))
+
+        else:
+            return render(request, "tasks/add.html", {
+                "form": form
+            })
+    return render(request, "encyclopedia/create.html", {
+        "form": wikiform()
+    })
+
+def edit(request, title):
+    return 
 
 def random_page(request):
     

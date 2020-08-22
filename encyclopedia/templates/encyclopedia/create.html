@@ -7,10 +7,10 @@
 {% block body %}
     <!-- <label for="create">Create new entry</label> -->
     <h4>Create new entry</h4>
-    <form action="{% url 'create' %}">
-        <textarea id="create" name="create" rows="50" cols="50">
-        </textarea>
-        <input type="submit" value="Submit">
+    <form action="{% url 'create' %}" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input class="btn btn-primary" type="submit">
     </form>
         
 {% endblock %}
