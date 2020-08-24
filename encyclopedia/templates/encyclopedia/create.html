@@ -1,11 +1,14 @@
 {% extends "encyclopedia/layout.html" %}
 
 {% block title %}
-    New Page
+    {% if title %}
+        {{title}}
+    {% else %}
+        New page
+    {% endif %}
 {% endblock %}
 
 {% block body %}
-    <!-- <label for="create">Create new entry</label> -->
     <h4>Create new entry</h4>
     <form action="{% url 'create' %}" method="POST">
         {% csrf_token %}

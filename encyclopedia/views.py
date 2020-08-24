@@ -12,7 +12,9 @@ from . import util
 class wikiform(forms.Form):
     title = forms.CharField(label="Title for your wiki entry")
     content = forms.CharField(label="Content for your wiki entry", widget=forms.Textarea)
-
+class editform(forms.Form):
+    title = forms.CharField(label="Edit title for your wiki entry")
+    content = forms.CharField(label="Edit content for your wiki entry", widget=forms.Textarea)
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -62,6 +64,7 @@ def create(request):
 
         else:
             return render(request, "tasks/add.html", {
+                "title": title,
                 "form": form
             })
     return render(request, "encyclopedia/create.html", {
@@ -69,7 +72,11 @@ def create(request):
     })
 
 def edit(request, title):
-    return 
+    form = editform(initial={'title': title, 'content': util.get_entry(title)})
+    return render(request, "encyclopedia/create.html", {
+        "title": title,
+        "form": form
+    })
 
 def random_page(request):
     
